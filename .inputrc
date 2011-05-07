@@ -1,0 +1,12 @@
+set completion-ignore-case On
+
+# these allow you to use ctrl+left/right arrow keys
+# to jump the cursor over words
+#
+#"\e[5C": forward-word
+#"\e[5D": backward-word]
+"3": "#"
+"£": "#"
+
+set meta-flag on
+set input-meta on

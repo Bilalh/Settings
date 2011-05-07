@@ -1,0 +1,76 @@
+bin/
+tmp/
+.svn/
+.hg
+.svn
+CVS
+
+# automatic backup files
+*~.nib
+*.swp
+*~
+*(Autosaved).rtfd/
+Backup[ ]of[ ]*.pages/
+Backup[ ]of[ ]*.key/
+Backup[ ]of[ ]*.numbers/
+
+# Mac OS X Finder
+.DS_Store
+# Sparkle distribution Private Key (Don’t check me in!)
+dsa_priv.pem
+# XCode (and ancestors) per-user config (very noisy, and not relevant)
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+# Xcode 4
+xcuserdata/
+project.xcworkspace/
+# Generated files
+VersionX-revision.h
+
+
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz
+*.fls
+*.fmt
+*.ini
+*.log
+*.fdb_latexmk
+*.log
+*.watcher_pid
+
+*.DS_Store
+*.o
+*.out
+Thumbs.db
+*~
+\#*
+.\#*
+*.swp
+*.tmproj
+tmtags
+*.class

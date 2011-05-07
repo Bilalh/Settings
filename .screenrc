@@ -1,0 +1,36 @@
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
+
+##    Some general options    ##
+
+# Turn off start message:
+startup_message off
+
+# Set messages timeout to one second: 
+msgwait 1
+hardstatus alwayslastline "%{=b}%{G} %{b}%w"
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
+
+##    Keybindings    ##
+
+# bind F7  to detach screen session from this terminal
+# bind F8  to kill current screen window.
+# bind F9  to create a new screen
+# bind F10 to rename current screen window
+# bind F11 to move to previous window
+# bind F12 to move to next window
+#bindkey -k k7 detach
+#bindkey -k k8 kill
+#bindkey -k k9 screen
+#bindkey -k k2 prev
+#bindkey -k k; title
+#bindkey -k F1 prev
+#bindkey -k k3 next
+
+bindkey -k k13 prev
+bindkey -k k14 next
+
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
+defscrollback 1000
+# Make the output buffer large for (fast) xterms.
+termcapinfo xterm* OL=1000
+shell bash

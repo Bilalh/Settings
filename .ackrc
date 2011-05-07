@@ -1,0 +1,4 @@
+--type-add=ruby=.haml,.rake,.rsel
+--type-set=music=.mp3,.m4a,.flac,.ac3,.ogg,.aiff,.m4b,.aac,.wav,.wmv,.ape,.mka
+--type-set=manga=.cbz,.cbr,.cba,cb7
+--type-set=tex-temp=.pdfsync,.log,.bbl,.aux,.blg,.synctex,.fdb,.out,.toc,.fdb_latexmk
