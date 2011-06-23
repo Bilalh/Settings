@@ -21,8 +21,8 @@ shopt -s histreedit          # allows re-edit on C-R
 export EDITOR='vim'          # default editor 
 export FIGNORE=$FIGNORE:.pyc:.o:.class
 
-source ~/.completion/git-completion.bash # git auto complete
-source ~/.bash/bashmarks.bash
+[ -f ~/.completion/git-completion.bash ] &&  source ~/.completion/git-completion.bash 
+[ -f  ~/.bash/bashmarks.bash ]           &&  source ~/.bash/bashmarks.bash
 
 # Path settings(bin before current $PATH to override default version)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
