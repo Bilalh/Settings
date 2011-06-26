@@ -7,7 +7,7 @@ export PS1="Bilalh: $ "      # bash prompt
 export HISTFILESIZE=10000    # the bash history should save 10000 commands
 export HISTCONTROL=erasedups # remove duplicate from history
 
-# don't store history entries that match this pattern
+# don't store history entries that match this pattern  
 declare -x HISTIGNORE='op:opr:mlgw:cs:mll:ax:jr*:gitx:hista:mlwg:aes*:hda:on:mdb*:histm: *'
 
 alias h='history | grep '
@@ -27,8 +27,8 @@ export FIGNORE=$FIGNORE:.pyc:.o:.class
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxbxegedabagacad
 
-source ~/.completion/git-completion.bash # git auto complete
-source ~/.bash/bashmarks.bash
+[ -f ~/.completion/git-completion.bash ] &&  source ~/.completion/git-completion.bash 
+[ -f  ~/.bash/bashmarks.bash ]           &&  source ~/.bash/bashmarks.bash
 
 ### Path Settings 
 # Path settings(bin before current $PATH to override default version)
