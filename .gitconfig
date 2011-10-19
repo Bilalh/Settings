@@ -1,0 +1,33 @@
+[user]
+	name = Bilal Hussain
+	email = bh246@st-andrews.ac.uk
+[color]
+	ui = auto
+[core]
+	excludesfile = /Users/bilalh/.gitignore
+[alias]
+	b = branch
+	lg = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
+	ld = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai)%Creset'
+	pom = push origin master
+	w = whatchanged
+	p = push
+	c = commit 
+	ca = commit -am
+	ch = checkout
+	s = status
+	d = describe
+	ldiff = difftool -t latex
+[core]
+	pager = less -FRSX
+	quotepath = false
+[apply]
+	whitespace = fix
+[difftool.latex]
+	cmd = latexdiff $LOCAL $REMOTE
+[difftool "Kaleidoscope"]
+	cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[diff]
+	tool = Kaleidoscope
