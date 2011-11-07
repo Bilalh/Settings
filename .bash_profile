@@ -39,12 +39,17 @@ export LSCOLORS=ExFxCxDxbxegedabagacad
 # Path settings(bin before current $PATH to override default version)
 PATH=$HOME/bin:/usr/local/bin:$PATH
 PATH=$PATH:/usr/local/sbin:$HOME/bin/mplayer_osx
+PATH=$PATH:$HOME/Library/Haskell/bin
 
 # Scripts 
 [ -d ~/.pscripts/  ] && PATH=$PATH:~/.pscripts/
 [ -d ~/.Utilities/ ] && for i in ~/.Utilities/*; do PATH=$PATH:$i; done
 PATH=$PATH:/Users/bilalh/Programming/Projects/Shell-Tunes/extra
+
+PATH=$PATH:$HOME/Programming/Java/android-sdk-mac_x86/platform-tools
 export PATH
+
+export ANDROID_SDK=$HOME/Programming/Java/android-sdk-mac_x86
 
 ### aliases and other functions
 [ -f ~/.bashrc ] && source ~/.bashrc

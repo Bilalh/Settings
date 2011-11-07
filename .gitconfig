@@ -6,18 +6,52 @@
 [core]
 	excludesfile = /Users/bilalh/.gitignore
 [alias]
+	
 	b = branch
-	lg = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
-	ld = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai)%Creset'
-	pom = push origin master
-	w = whatchanged
-	p = push
 	c = commit 
+	d = describe
+	p = push
+	s = status
+	w = whatchanged
 	ca = commit -am
 	ch = checkout
-	s = status
-	d = describe
+	pom = push origin master
 	ldiff = difftool -t latex
+	
+	# Logs
+	lg = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
+	ld = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai)%Creset'
+	
+	# One line per commit
+	lo  = log --graph --decorate --pretty=oneline --abbrev-commit
+	loa = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	
+	# commits not pushed to $1
+    unpushed = cherry -v
+
+    # what tag contains the sha
+    tag = name-rev --name-only
+
+    # what branch contains the sha
+    contains = branch --contains
+	
+	# lost commits
+	lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
+	
+	# show a list of branches sorted by time of last commit
+    brage = "!f() { git for-each-ref --sort=committerdate refs/heads $1 --format=\"%(refname:short)\" ; }; g() { for C in $(f $1) ; do git show -s --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset $C\" \"$C\" -- ; done; }; g "
+
+    # show remote branches as well
+    brageall = !git brage refs/remotes
+
+    # show a list of tags sorted by when they were tagged
+    tagage = "!sh -c 'git for-each-ref --sort=taggerdate refs/tags --format=\"%(refname:short)\"'"
+
+    # show a list of every branch and show there latests commit, sorted by last commit
+    brlog = "!sh -c 'for C in $(git for-each-ref --sort=committerdate refs/heads --format=\"%(refname:short)\") ; do git show -s --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset $C\" \"$C\" -- ; git show -s $C ; echo; done'"	
+	# url of origin, about 99% of what I use git config --list for
+    cloneurl = config --get remote.origin.url
+	
 [core]
 	pager = less -FRSX
 	quotepath = false
@@ -31,3 +65,9 @@
 	prompt = false
 [diff]
 	tool = Kaleidoscope
+[difftool "sourcetree"]
+	cmd = /Applications/Kaleidoscope.app/Contents/MacOS/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

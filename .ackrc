@@ -2,6 +2,7 @@
 --type-add=html=.html.erb,.html.haml
 --type-add=js=.js.erb
 --type-add=css=.sass,.less
+--type-set=jasmin=.j
 --type-set=cucumber=.feature
 --type-set=music=.mp3,.m4a,.flac,.ac3,.ogg,.aiff,.m4b,.aac,.wav,.wmv,.ape,.mka
 --type-set=manga=.cbz,.cbr,.cba,cb7
