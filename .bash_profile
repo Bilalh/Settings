@@ -50,6 +50,8 @@ PATH=$PATH:$HOME/Programming/Java/android-sdk-mac_x86/platform-tools
 export PATH
 
 export ANDROID_SDK=$HOME/Programming/Java/android-sdk-mac_x86
+export RUBY_PLATFORM="darwin"
+export R_HOME=/Library/Frameworks/R.framework/Resources
 
 ### aliases and other functions
 [ -f ~/.bashrc ] && source ~/.bashrc

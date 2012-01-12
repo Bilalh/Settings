@@ -1,12 +1,12 @@
 [user]
-	name = Bilal Hussain
+  	name = Bilal Syed Hussain
 	email = bh246@st-andrews.ac.uk
+  # email = bhterra@gmail.com
 [color]
 	ui = auto
 [core]
 	excludesfile = /Users/bilalh/.gitignore
 [alias]
-	
 	b = branch
 	c = commit 
 	d = describe
@@ -15,15 +15,16 @@
 	w = whatchanged
 	ca = commit -am
 	ch = checkout
+	cam = commit --amend -am
 	pom = push origin master
 	ldiff = difftool -t latex
 	
 	# Logs
 	lg = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
 	ld = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai)%Creset'
+	lo = log --graph --pretty=format:'%Cred%h%Creset - %Cgreen(%cr) %C(bold blue)<%an>%Creset %s %C(yellow)%d%Creset ' --abbrev-commit --date=relative
 	
 	# One line per commit
-	lo  = log --graph --decorate --pretty=oneline --abbrev-commit
 	loa = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	
 	# commits not pushed to $1
@@ -52,11 +53,17 @@
 	# url of origin, about 99% of what I use git config --list for
     cloneurl = config --get remote.origin.url
 	
+	shorten = "!sh -c 'curl -i http://git.io -F url=$1' -"
+
 [core]
 	pager = less -FRSX
 	quotepath = false
 [apply]
 	whitespace = fix
+[gist]
+	private = yes
+	browse  = yes
+	
 [difftool.latex]
 	cmd = latexdiff $LOCAL $REMOTE
 [difftool "Kaleidoscope"]

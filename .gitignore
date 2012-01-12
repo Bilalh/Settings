@@ -31,7 +31,7 @@ project.xcworkspace/
 # Generated files
 VersionX-revision.h
 
-
+#Tex
 *.aux
 *.glo
 *.idx
@@ -62,6 +62,7 @@ VersionX-revision.h
 *.fdb_latexmk
 *.log
 *.watcher_pid
+*.brf
 
 *.DS_Store
 *.o
