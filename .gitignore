@@ -1,11 +1,8 @@
+# Folders #
 bin/
 tmp/
-.svn/
-.hg
-.svn
-CVS
 
-# automatic backup files
+# automatic backup files #
 *~.nib
 *.swp
 *~
@@ -18,16 +15,16 @@ Backup[ ]of[ ]*.key/
 Backup[ ]of[ ]*.numbers/
 
 
-# Xcode 4
+# Xcode 4 #
 xcuserdata/
 project.xcworkspace/
-# Generated files
+# Generated files #
 VersionX-revision.h
 
-# Sparkle distribution Private Key (Don’t check me in!)
+# Sparkle distribution Private Key (Don’t check me in!) #
 dsa_priv.pem
 
-# XCode (and ancestors) per-user config (very noisy, and not relevant)
+# XCode (and ancestors) per-user config (very noisy, and not relevant) #
 *.mode1
 *.mode1v3
 *.mode2v3
@@ -35,21 +32,39 @@ dsa_priv.pem
 *.perspectivev3
 *.pbxuser
 
-
-# Mac OS X Finder
-.DS_Store
-
-# Windows
+# OS generated files #
+.DS_Store*
+ehthumbs.db
+Icon?
 Thumbs.db
+._*
+.Spotlight-V100
+.Trashes
+Desktop.ini
 
 
-# binaries 
+# Binaries #
 *.class
 *.o
 *.out
 
 
-#Tex
+# Version Control #
+.svn/
+
+## CVS ##
+/CVS/*
+*/CVS/*
+.cvsignore
+*/.cvsignore
+
+## Mercurial ##
+/.hg/*
+*/.hg/*
+.hgignore
+
+
+# Tex #
 *.aux
 *.glo
 *.idx
