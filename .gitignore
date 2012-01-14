@@ -9,15 +9,24 @@ CVS
 *~.nib
 *.swp
 *~
+*~
+\#*
+.\#*
 *(Autosaved).rtfd/
 Backup[ ]of[ ]*.pages/
 Backup[ ]of[ ]*.key/
 Backup[ ]of[ ]*.numbers/
 
-# Mac OS X Finder
-.DS_Store
+
+# Xcode 4
+xcuserdata/
+project.xcworkspace/
+# Generated files
+VersionX-revision.h
+
 # Sparkle distribution Private Key (Don’t check me in!)
 dsa_priv.pem
+
 # XCode (and ancestors) per-user config (very noisy, and not relevant)
 *.mode1
 *.mode1v3
@@ -25,11 +34,20 @@ dsa_priv.pem
 *.perspective
 *.perspectivev3
 *.pbxuser
-# Xcode 4
-xcuserdata/
-project.xcworkspace/
-# Generated files
-VersionX-revision.h
+
+
+# Mac OS X Finder
+.DS_Store
+
+# Windows
+Thumbs.db
+
+
+# binaries 
+*.class
+*.o
+*.out
+
 
 #Tex
 *.aux
@@ -63,13 +81,3 @@ VersionX-revision.h
 *.log
 *.watcher_pid
 *.brf
-
-*.DS_Store
-*.o
-*.out
-Thumbs.db
-*~
-\#*
-.\#*
-*.swp
-*.class
