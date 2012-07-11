@@ -8,11 +8,11 @@ export GIT_PS1_SHOWSTASHSTATE=true
 # bilalh@8afbf821: [develop]      full colour + commit id + branch
 #export PS1='\[$(tput setaf 3)\]\u@\h:\[$(tput sgr0)$(tput setaf 5)\]\[$(tput sgr0)$(tput setaf 2)\] $(__git_ps1 "[%s]") \[$(tput sgr0)\]$ '
 ### History Settings
-export HISTFILESIZE=10000    # the bash history should save 10000 commands
+export HISTFILESIZE=15000    # the bash history should save 15000 commands
 export HISTCONTROL=erasedups # remove duplicate from history
 
 # don't store history entries that match this pattern  
-declare -x HISTIGNORE='op:mlgw:cs:mll:ax:jr*:gitx:hista:mlwg:aes*:hda:on:mdb:histm:srm*: *'
+declare -x HISTIGNORE='cs:jr*:gitx:hista:aes*:srm*: *'
 
 alias h='history | grep '
 alias hist='history | less '
@@ -31,9 +31,13 @@ export FIGNORE=$FIGNORE:.o:.out:.pyc:.pdfsync:.log:.bbl:.aux:.blg:.out:.toc:
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxbxegedabagacad
 
-# Completion for git
-[ -f ~/.completion/git-completion.bash ] && source ~/.completion/git-completion.bash 
-[ -f  ~/.local/bin/bashmarks.sh ]        && source ~/.local/bin/bashmarks.sh 
+# Completion for git + others
+[ -d ~/.completion/ ] &&  for i in ~/.completion/*.sh; do source $i; done
+
+
+
+# bashmarks
+[ -f  ~/.local/bin/bashmarks.sh ]  && source ~/.local/bin/bashmarks.sh 
 
 ### Path Settings 
 # Path settings(bin before current $PATH to override default version)
@@ -47,6 +51,7 @@ PATH=$PATH:$HOME/Library/Haskell/bin
 PATH=$PATH:/Users/bilalh/Programming/Projects/Shell-Tunes/extra
 
 PATH=$PATH:$HOME/Programming/Java/android-sdk-mac_x86/platform-tools
+PATH=$PATH:/Users/bilalh/Uni/CS/SH/ws/CS4099-SH/tools/scripts
 export PATH
 
 export ANDROID_SDK=$HOME/Programming/Java/android-sdk-mac_x86
@@ -56,4 +61,9 @@ export R_HOME=/Library/Frameworks/R.framework/Resources
 ### aliases and other functions
 [ -f ~/.bashrc ] && source ~/.bashrc
 
+alias comp='. `brew --prefix`/etc/bash_completion'
 
+
+export PATH=/Applications/SenchaSDKTools-2.0.0-beta3:$PATH
+
+export SENCHA_SDK_TOOLS_2_0_0_BETA3="/Applications/SenchaSDKTools-2.0.0-beta3"

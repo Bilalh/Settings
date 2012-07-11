@@ -14,8 +14,8 @@
 	s = status
 	w = whatchanged
 	ca = commit -am
-	ch = checkout
 	cam = commit --amend -am
+	ch = checkout
 	pom = push origin master
 	ldiff = difftool -t latex
 	
@@ -65,7 +65,7 @@
 	browse  = yes
 	
 [difftool.latex]
-	cmd = latexdiff $LOCAL $REMOTE
+	cmd = latexdiff  \"$LOCAL\" \"$REMOTE\"
 [difftool "Kaleidoscope"]
 	cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
 [difftool]
