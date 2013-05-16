@@ -1,7 +1,7 @@
 [user]
-  	name = Bilal Syed Hussain
+	name = Bilal Syed Hussain
 	email = bh246@st-andrews.ac.uk
-  # email = bhterra@gmail.com
+	bemail = bilalshussain@gmail.com
 [color]
 	ui = auto
 [core]
@@ -67,14 +67,17 @@
 [difftool.latex]
 	cmd = latexdiff  \"$LOCAL\" \"$REMOTE\"
 [difftool "Kaleidoscope"]
-	cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool]
 	prompt = false
 [diff]
 	tool = Kaleidoscope
 [difftool "sourcetree"]
-	cmd = /Applications/Kaleidoscope.app/Contents/MacOS/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustExitCode = true

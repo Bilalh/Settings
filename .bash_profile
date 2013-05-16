@@ -5,6 +5,12 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWSTASHSTATE=true
 
+export LC_CTYPE=en_GB.UTF-8;
+export LANG=en_GB.UTF-8
+
+#for gnu parallel
+export PARALLEL="-j7"
+
 # bilalh@8afbf821: [develop]      full colour + commit id + branch
 #export PS1='\[$(tput setaf 3)\]\u@\h:\[$(tput sgr0)$(tput setaf 5)\]\[$(tput sgr0)$(tput setaf 2)\] $(__git_ps1 "[%s]") \[$(tput sgr0)\]$ '
 ### History Settings
@@ -17,6 +23,8 @@ declare -x HISTIGNORE='cs:jr*:gitx:hista:aes*:srm*: *'
 alias h='history | grep '
 alias hist='history | less '
 
+#allow colour in less 
+export LESS='-R'
 
 ### Bash options 
 shopt -s histappend          # all sessions are saved 
@@ -29,32 +37,43 @@ export FIGNORE=$FIGNORE:.o:.out:.pyc:.pdfsync:.log:.bbl:.aux:.blg:.out:.toc:
 
 # Colorize the prompt and commands such as ls
 export CLICOLOR=1
-export LSCOLORS=ExFxCxDxbxegedabagacad
+# light colours
+#export LSCOLORS=ExFxCxDxbxegedabagacad
+# dark colours
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
 # Completion for git + others
-[ -d ~/.completion/ ] &&  for i in ~/.completion/*.sh; do source $i; done
-
-
+[ -d /usr/local/etc/bash_completion.d/ ] &&  for i in /usr/local/etc/bash_completion.d/*; do source $i; done
 
 # bashmarks
 [ -f  ~/.local/bin/bashmarks.sh ]  && source ~/.local/bin/bashmarks.sh 
 
 ### Path Settings 
 # Path settings(bin before current $PATH to override default version)
-PATH=$HOME/bin:/usr/local/bin:$PATH
+PATH=$HOME/bin:$HOME/bin/haskell_stuff:/usr/local/bin:$PATH
 PATH=$PATH:/usr/local/sbin:$HOME/bin/mplayer_osx
-PATH=$PATH:$HOME/Library/Haskell/bin
+PATH=$HOME/Library/Haskell/bin:$HOME/.cabal/bin:$PATH
 
-# Scripts 
-[ -d ~/.pscripts/  ] && PATH=$PATH:~/.pscripts/
+# Scripts for PATH 
+[ -d ~/.pscripts/  ] && PATH=$PATH:~/.pscripts
 [ -d ~/.Utilities/ ] && for i in ~/.Utilities/*; do PATH=$PATH:$i; done
-PATH=$PATH:/Users/bilalh/Programming/Projects/Shell-Tunes/extra
+PATH=$PATH:/Users/bilalh/Projects/Shell-Tunes/extra
+PATH=$PATH:~/.rvm/gems/ruby-1.9.3-p286/bin
+PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.3/bin
+#PATH=$PATH:$HOME/Programming/Java/android-sdk-mac_x86/platform-tools
 
-PATH=$PATH:$HOME/Programming/Java/android-sdk-mac_x86/platform-tools
-PATH=$PATH:/Users/bilalh/Uni/CS/SH/ws/CS4099-SH/tools/scripts
+#cs PATH
+#PATH=$PATH:/Users/bilalh/CS/conjure/scripts/other
+#PATH=$PATH:/Applications/Comet
+PATH=$PATH:/Users/bilalh/CS/minion-build
+PATH=$PATH:/Users/bilalh/CS/savilerow
+PATH=$PATH:/Users/bilalh/CS/conjure/test/solving
+PATH=$PATH:/Users/bilalh/CS/conjure/scripts/other
 export PATH
 
-export ANDROID_SDK=$HOME/Programming/Java/android-sdk-mac_x86
+#Other Stuff
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+#export ANDROID_SDK=$HOME/Programming/Java/android-sdk-mac_x86
 export RUBY_PLATFORM="darwin"
 export R_HOME=/Library/Frameworks/R.framework/Resources
 
@@ -63,7 +82,4 @@ export R_HOME=/Library/Frameworks/R.framework/Resources
 
 alias comp='. `brew --prefix`/etc/bash_completion'
 
-
-export PATH=/Applications/SenchaSDKTools-2.0.0-beta3:$PATH
-
-export SENCHA_SDK_TOOLS_2_0_0_BETA3="/Applications/SenchaSDKTools-2.0.0-beta3"
+export CONJURE_REPO="~/CS/conjure"

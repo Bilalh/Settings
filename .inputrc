@@ -1,3 +1,4 @@
+# completion that ignores the the case of the files
 set completion-ignore-case On
 
 # these allow you to use ctrl+left/right arrow keys
@@ -22,4 +23,4 @@ set input-meta on
 set output-meta on
 set convert-meta off
 
-
+set match-hidden-files off
