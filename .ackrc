@@ -1,6 +1,7 @@
 #--type-set=music=.mp3,.m4a,.flac,.ac3,.ogg,.aiff,.m4b,.aac,.wav,.wmv,.ape,.mka
 #--type-set=manga=.cbz,.cbr,.cba,cb7
 --type-set=juck=.xcodeproj
+--type-set=txt=.txt
 --type-set=eprime=.eprime,
 --type-set=essence=.essence
 --type-set=e=.eprime,.essence,.solution

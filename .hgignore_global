@@ -2,3 +2,12 @@ syntax: glob
 
 *~
 .DS_Store
+ConjureGetSolution
+.shelly
+GenerateRandomParam2
+Debuging
+UpTests
+out
+.MINIONSTATS*
+.MINIONSOLS*
+intermediate

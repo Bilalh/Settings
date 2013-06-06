@@ -1,0 +1,24 @@
+dist
+UpTests$
+debugging
+.tmtags
+tags
+.swp
+.hi
+.essence.binary
+savilerow/
+.essence-repr/
+syntax: regexp
+^rules
+EssenceCatalog/.*/
+EssenceCatalog/.*rts
+specs/.*/
+specs/.*rts
+
+syntax: glob
+*~
+.DS_Store
+*orig
+*.o
+*.o-boot
+.shelly/
