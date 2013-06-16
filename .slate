@@ -3,27 +3,74 @@ config windowHintsShowIcons true
 config windowHintsIgnoreHiddenWindows false
 config windowHintsSpread true
 config windowHintsShowIcons true
- 
- 
-# Cmd+G brings up grid like Divvy (for each monitor)
-bind g:cmd grid padding:5 0:8,8 1:8,5
- 
+
+
 # Abstract positions
 alias full        move   screenOriginX;screenOriginY screenSizeX;screenSizeY
+
 alias lefthalf    move   screenOriginX;screenOriginY screenSizeX/2;screenSizeY
 alias righthalf   move   screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+
+alias tophalf     move   screenOriginX;screenOriginY screenSizeX;screenSizeY/2
+alias bottomhalf  move   screenOriginX;screenOriginY+screenSizeY/2 screenSizeX;screenSizeY/2
+
 alias topleft     corner top-left     resize:screenSizeX/2;screenSizeY/2
 alias topright    corner top-right    resize:screenSizeX/2;screenSizeY/2
 alias bottomleft  corner bottom-left  resize:screenSizeX/2;screenSizeY/2
 alias bottomright corner bottom-right resize:screenSizeX/2;screenSizeY/2
- 
-# Numpad location Bindings
 
-bind 1:ctrl;alt;cmd ${lefthalf}
-bind 2:ctrl;alt;cmd ${righthalf}
+alias rightLot  move  screenOriginX+(screenSizeX/9*4);screenOriginY (screenSizeX/9*5);screenSizeY
+alias rightMost move  screenOriginX+(screenSizeX/9*3)-50;screenOriginY (screenSizeX/9*6)+50;screenSizeY
+alias leftLess  move  screenOriginX;screenOriginY (screenSizeX/9*4);screenSizeY
 
-bind 3:ctrl;alt;cmd ${topleft}
-bind 4:ctrl;alt;cmd ${topright}
+# The hyper key
+alias hyper ctrl;alt;cmd;shift
 
-bind 5:ctrl;alt;cmd ${bottomleft}
-bind 6:ctrl;alt;cmd ${bottomright}
+# Hyper+G brings up grid (for each monitor)
+bind g:${hyper} grid padding:5 0:8,8 1:8,5
+
+# To Resize windows
+bind 1:${hyper} ${lefthalf}
+bind 1:${hyper} ${lefthalf}
+bind 2:${hyper} ${righthalf}
+
+bind 3:${hyper} ${topleft}
+bind 4:${hyper} ${topright}
+
+bind 5:${hyper} ${bottomleft}
+bind 6:${hyper} ${bottomright}
+
+bind 7:${hyper} ${tophalf}
+bind 8:${hyper} ${bottomhalf}
+
+bind q:${hyper} ${leftLess}
+bind w:${hyper} ${rightLot}
+bind e:${hyper} ${rightMost}
+bind f:${hyper} ${full}
+
+
+# Focus Bindings
+bind right:${hyper} focus right
+bind left:${hyper}  focus left
+bind up:${hyper}    focus up
+bind down:${hyper}  focus down
+
+bind l:${hyper} focus right
+bind h:${hyper} focus left
+bind k:${hyper} focus up
+bind j:${hyper} focus down
+
+bind b:${hyper} focus behind
+
+# Other bindings
+
+bind ;:${hyper} relaunch
+bind u:${hyper} undo
+
+# Screen bindings
+bind n:${hyper} throw left
+bind m:${hyper} throw right
+
+
+bind i:${hyper} hint hint 
+
