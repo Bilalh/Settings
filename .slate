@@ -21,9 +21,10 @@ alias bottomright corner bottom-right resize:screenSizeX/2;screenSizeY/2
 
 alias rightLot  move  screenOriginX+(screenSizeX/9*4);screenOriginY (screenSizeX/9*5);screenSizeY
 alias rightMost move  screenOriginX+(screenSizeX/9*3)-50;screenOriginY (screenSizeX/9*6)+50;screenSizeY
+alias rightLess move  screenOriginX+(screenSizeX/9*5);screenOriginY (screenSizeX/9*4);screenSizeY
 alias leftLess  move  screenOriginX;screenOriginY (screenSizeX/9*4);screenSizeY
+alias leftLot   move  screenOriginX;screenOriginY (screenSizeX/9*5);screenSizeY
 
-# The hyper key
 alias hyper ctrl;alt;cmd;shift
 
 # Hyper+G brings up grid (for each monitor)
@@ -44,8 +45,11 @@ bind 7:${hyper} ${tophalf}
 bind 8:${hyper} ${bottomhalf}
 
 bind q:${hyper} ${leftLess}
+bind a:${hyper} ${leftLot}
+
 bind w:${hyper} ${rightLot}
 bind e:${hyper} ${rightMost}
+bind r:${hyper} ${rightLess}
 bind f:${hyper} ${full}
 
 
@@ -72,5 +76,6 @@ bind n:${hyper} throw left
 bind m:${hyper} throw right
 
 
-bind i:${hyper} hint hint 
+
+#bind i:${hyper} hint afqrplzvm
 

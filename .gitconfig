@@ -12,13 +12,14 @@
 	d = describe
 	p = push
 	s = status
+	st = status
 	w = whatchanged
 	ca = commit -am
 	cam = commit --amend -am
 	ch = checkout
 	pom = push origin master
 	ldiff = difftool -t latex
-	
+
 	# Logs
 	lg = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
 	ld = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai)%Creset'
@@ -81,3 +82,5 @@
 [mergetool "Kaleidoscope"]
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustExitCode = true
+[credential]
+	helper = osxkeychain

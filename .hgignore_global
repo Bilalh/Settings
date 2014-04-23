@@ -7,7 +7,7 @@ ConjureGetSolution
 GenerateRandomParam2
 Debuging
 UpTests
-out
 .MINIONSTATS*
 .MINIONSOLS*
 intermediate
+.cabal-sandbox

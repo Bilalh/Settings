@@ -6,6 +6,7 @@ set completion-ignore-case On
 #
 #"\e[5C": forward-word
 #"\e[5D": backward-word]
+
 "3": "#"
 "£": "#"
 

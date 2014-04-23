@@ -1,54 +1,59 @@
 export ZSH=$HOME/.oh-my-zsh
-export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-#export ZSH_THEME=avery
-
-
-#export ZSH_THEME="powerline"
-#export POWERLINE_RIGHT_A="exit-code"
-#export POWERLINE_HIDE_USER_NAME="true"
-#export POWERLINE_HIDE_HOST_NAME="true"
-#export POWERLINE_DISABLE_RPROMPT="true"
-#export POWERLINE_RIGHT_B=""
-#export POWERLINE_RIGHT_A=""
-
 
 export DEFAULT_USER=Bilalh
+setopt interactivecomments
 
 plugins=(funcs todo)
-plugins+=(osx ruby autojump encode64 gem git-extras 
-          pip battery brew pygmentize python 
-          zsh-syntax-highlighting history-substring-search )
+plugins+=(
+         osx ruby autojump encode64 gem git-extras
+         pip battery brew pygmentize python vagrant
+         #auto-fu
+         history-substring-search 
+         zsh-git-escape-magic
+         anaconda forklift gnu-utils
+         )
+
+ANACONDA=~/.local/anaconda/
 
 DISABLE_CORRECTION=true
+ZSH_THEME="pure"
 source $ZSH/oh-my-zsh.sh
 
+fpath+=~/.oh-my-zsh/fpath
+autoload -Uz git-escape-magic
+git-escape-magic
 zstyle '*' single-ignored complete
-#setopt menu_complete
+unsetopt menu_complete
 
-export PROMPT='[%28<...<%4(~:...:)%3~/] %# '
+export BASHMARKS_NO_PWD=True
+#export PROMPT='[%28<...<%4(~:...:)%3~/] %# '
 
 # History
-HISTFILE=$HOME/.zsh_history
-HISTSIZE=40000
+HISTFILE=${HISTFILE:-$HOME/.zsh_history}
+HISTSIZE=50000
+SAVEHIST=10000
 setopt APPEND_HISTORY           # append rather than overwrite history file.
 setopt EXTENDED_HISTORY         # save timestamp and runtime information
 setopt HIST_EXPIRE_DUPS_FIRST   # allow dups, but expire old ones when I hit HISTSIZE
 setopt HIST_FIND_NO_DUPS        # don't find duplicates in history
 setopt HIST_IGNORE_ALL_DUPS     # ignore duplicate commands regardless of commands in between
 setopt HIST_IGNORE_DUPS         # ignore duplicate commands
+
+setopt HIST_IGNORE_SPACE        # Don't save command starting with a space
 setopt HIST_REDUCE_BLANKS       # leave blanks out
 setopt HIST_SAVE_NO_DUPS        # don't save duplicates
 setopt INC_APPEND_HISTORY       # write after each command
 setopt SHARE_HISTORY            # share history between sessions
-setopt HIST_IGNORE_SPACE        # Don't save command starting with a space
+
+#setopt null_glob                # Allow null globs 
+setopt nonullglob
+setopt RM_STAR_WAIT             #  first wait ten seconds when doing rm *
 unsetopt cdablevars
 
 export EDITOR='vim'          # default editor 
 export LESS='-R'             # Less colour 
 export FIGNORE=$FIGNORE:.o:.out:.pyc:.pdfsync:.log:.bbl:.aux:.blg:.out:.toc:
 
-export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
 
 #
 # light colours
@@ -59,8 +64,7 @@ export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 # Path settings(bin before current $PATH to override default version)
 PATH=$HOME/bin:$HOME/bin/haskell_stuff:/usr/local/bin:$PATH
 PATH=$PATH:/usr/local/sbin:$HOME/bin/mplayer_osx
-PATH=$HOME/Library/Haskell/bin:$HOME/.cabal/bin:$PATH
-
+PATH=$HOME/.cabal/bin:$PATH:$HOME/Library/Haskell/bin:
 
 PATH=$PATH:/Users/bilalh/Projects/Shell-Tunes/extra
 PATH=$PATH:~/.rvm/gems/ruby-1.9.3-p286/bin
@@ -68,17 +72,20 @@ PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.3/bin
 #PATH=$PATH:$HOME/Programming/Java/android-sdk-mac_x86/platform-tools
 
 
-#cs PATH
 #PATH=$PATH:/Users/bilalh/CS/conjure/scripts/other
 [ -d ~/.pscripts/  ] && PATH=$PATH:~/.pscripts
 [ -d ~/.Utilities/ ] && for i in ~/.Utilities/*; do PATH=$PATH:$i; done
-PATH=$PATH:/Users/bilalh/CS/minion-build
+PATH=$PATH:/Users/bilalh/CS/minion/bin
 PATH=$PATH:/Users/bilalh/CS/savilerow
 PATH=$PATH:/Users/bilalh/CS/conjure/test/solving
 PATH=$PATH:/Users/bilalh/CS/conjure/scripts/other
+
+PATH=$PATH:/Applications/Mkvtoolnix.app/Contents/MacOS
+PATH=$PATH:/Users/bilalh/Projects/media2/.cabal-sandbox/bin
+#PATH=~/.local/anaconda/bin:$PATH;
 export PATH
 
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 #export ANDROID_SDK=$HOME/Programming/Java/android-sdk-mac_x86
 export RUBY_PLATFORM="darwin"
 export R_HOME=/Library/Frameworks/R.framework/Resources
@@ -105,7 +112,12 @@ alias f='dirs -v'
 autoload -U zcalc
 autoload -U zmv
 autoload -U zrecompile
-[ -f  ~/.local/bin/bashmarks.sh ]  && source ~/.local/bin/bashmarks.sh 
+autoload bashcompinit
+bashcompinit
+
+export BASHMARKS_k=true
+export BASHMARKS_ITERM_SESSION="B ZSH"
+[ -f  ~/Projects/_forks/bashmarks/bashmarks.sh ]  && source ~/Projects/_forks/bashmarks/bashmarks.sh 
 
 #Bindings
 insert_sudo () { zle beginning-of-line; zle -U "sudo " }
@@ -120,6 +132,29 @@ bindkey 'OD' beginning-of-line
 bindkey 'OC' end-of-line
 
 bindkey '' backward-kill-line
+
+
+tcsh-backward-word() {
+  local WORDCHARS="${WORDCHARS:s@/@}"
+  zle backward-word
+}
+zle -N tcsh-backward-word
+
+tcsh-forward-word() {
+  local WORDCHARS="${WORDCHARS:s@/@}"
+  zle forward-word
+}
+zle -N tcsh-forward-word
+
+bindkey "^[b" tcsh-backward-word
+bindkey "^[f" tcsh-forward-word
+
+tcsh-backward-delete-word () {
+  local WORDCHARS="${WORDCHARS:s#/#}"
+  zle backward-delete-word
+}
+zle -N tcsh-backward-delete-word
+bindkey "^W" tcsh-backward-delete-word
 
 # for trying # 
 bindkey -s '^[3' \#
@@ -171,7 +206,7 @@ export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline]
 
 
-ZSH_HIGHLIGHT_STYLES[path]='none'
+#ZSH_HIGHLIGHT_STYLES[path]='none'
 
 
 function avgBitRate(){
@@ -184,3 +219,24 @@ function avgBitRate(){
         lossless, n320, n256, n192, n160, nless\
     }' 
 }
+
+#vim tags completion for vim -t <tag>
+function _get_tags {
+  [ -f ./tags ] || return
+  local cur
+  read -l cur
+  echo $(echo $(awk -v ORS=" "  "/^${cur}/ { print \$1 }" tags))
+}
+compctl -x 'C[-1,-t]' -K _get_tags -- vim
+autoload -U compinit && compinit -u
+
+if [ -f ~/CS/instancegen/scripts/misc/convenience.sh ]; then
+    source ~/CS/instancegen/scripts/misc/convenience.sh 
+fi
+
+hr(){printf '=%.0s' $(seq $COLUMNS)}
+
+function exportf (){
+    export $(echo $1)="`whence -f $1 | sed -e "s/$1 //" `"
+}
+

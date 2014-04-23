@@ -20,7 +20,7 @@ export HISTCONTROL=erasedups # remove duplicate from history
 # don't store history entries that match this pattern  
 declare -x HISTIGNORE='cs:jr*:gitx:hista:aes*:srm*: *'
 
-alias h='history | grep '
+alias hg='history | grep '
 alias hist='history | less '
 
 #allow colour in less 
@@ -41,18 +41,31 @@ export CLICOLOR=1
 #export LSCOLORS=ExFxCxDxbxegedabagacad
 # dark colours
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'           # end mode
+export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\E[38;33;246m'   # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline]
 
 # Completion for git + others
 [ -d /usr/local/etc/bash_completion.d/ ] &&  for i in /usr/local/etc/bash_completion.d/*; do source $i; done
 
 # bashmarks
-[ -f  ~/.local/bin/bashmarks.sh ]  && source ~/.local/bin/bashmarks.sh 
+export BASHMARKS_k=true
+export BASHMARKS_ITERM_SESSION="B ZSH"
+[ -f  ~/Projects/_forks/bashmarks/bashmarks.sh ]  && source ~/Projects/_forks/bashmarks/bashmarks.sh 
+
+if [ -f ~/CS/instancegen/scripts/misc/convenience.sh ]; then
+    source ~/CS/instancegen/scripts/misc/convenience.sh 
+fi
 
 ### Path Settings 
 # Path settings(bin before current $PATH to override default version)
 PATH=$HOME/bin:$HOME/bin/haskell_stuff:/usr/local/bin:$PATH
 PATH=$PATH:/usr/local/sbin:$HOME/bin/mplayer_osx
-PATH=$HOME/Library/Haskell/bin:$HOME/.cabal/bin:$PATH
+PATH=$HOME/.cabal/bin:$PATH:$HOME/Library/Haskell/bin:$PATH
 
 # Scripts for PATH 
 [ -d ~/.pscripts/  ] && PATH=$PATH:~/.pscripts
@@ -69,10 +82,11 @@ PATH=$PATH:/Users/bilalh/CS/minion-build
 PATH=$PATH:/Users/bilalh/CS/savilerow
 PATH=$PATH:/Users/bilalh/CS/conjure/test/solving
 PATH=$PATH:/Users/bilalh/CS/conjure/scripts/other
+PATH:$PATH:/Applications/Mkvtoolnix.app/Contents/MacOS
 export PATH
 
 #Other Stuff
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 #export ANDROID_SDK=$HOME/Programming/Java/android-sdk-mac_x86
 export RUBY_PLATFORM="darwin"
 export R_HOME=/Library/Frameworks/R.framework/Resources
@@ -83,3 +97,9 @@ export R_HOME=/Library/Frameworks/R.framework/Resources
 alias comp='. `brew --prefix`/etc/bash_completion'
 
 export CONJURE_REPO="~/CS/conjure"
+
+# Setting PATH for Python 3.3
+# The orginal version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.3/bin:${PATH}"
+export PATH
+
