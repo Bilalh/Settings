@@ -55,51 +55,21 @@ export LESS='-R'             # Less colour
 export FIGNORE=$FIGNORE:.o:.out:.pyc:.pdfsync:.log:.bbl:.aux:.blg:.out:.toc:
 
 
-#
+
 # light colours
 #export LSCOLORS=ExFxCxDxbxegedabagacad
+
 # dark colours
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
-# Path settings(bin before current $PATH to override default version)
-PATH=$HOME/bin:$HOME/bin/haskell_stuff:/usr/local/bin:$PATH
-PATH=$PATH:/usr/local/sbin:$HOME/bin/mplayer_osx
-PATH=$HOME/.cabal/bin:$PATH:$HOME/Library/Haskell/bin:
 
-PATH=$PATH:/Users/bilalh/Projects/Shell-Tunes/extra
-PATH=$PATH:~/.rvm/gems/ruby-1.9.3-p286/bin
-PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.3/bin
-#PATH=$PATH:$HOME/Programming/Java/android-sdk-mac_x86/platform-tools
-
-
-#PATH=$PATH:/Users/bilalh/CS/conjure/scripts/other
-[ -d ~/.pscripts/  ] && PATH=$PATH:~/.pscripts
-[ -d ~/.Utilities/ ] && for i in ~/.Utilities/*; do PATH=$PATH:$i; done
-PATH=$PATH:/Users/bilalh/CS/minion/bin
-PATH=$PATH:/Users/bilalh/CS/savilerow
-PATH=$PATH:/Users/bilalh/CS/conjure/test/solving
-PATH=$PATH:/Users/bilalh/CS/conjure/scripts/other
-
-PATH=$PATH:/Applications/Mkvtoolnix.app/Contents/MacOS
-PATH=$PATH:/Users/bilalh/Projects/media2/.cabal-sandbox/bin
-#PATH=~/.local/anaconda/bin:$PATH;
-export PATH
-
-#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-#export ANDROID_SDK=$HOME/Programming/Java/android-sdk-mac_x86
-export RUBY_PLATFORM="darwin"
-export R_HOME=/Library/Frameworks/R.framework/Resources
-
-export CONJURE_REPO="~/CS/conjure"
-
+source ~/.settings/paths.sh
 
 #Adds all files in .bash at lanuch
 [ -d ~/.bash/ ] &&  for i in ~/.bash/*.sh; do source $i; done
 
 [ -d ~/.pbash/ ] &&  for i in ~/.pbash/*.sh; do source $i; done
-
-PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
-
+#
 #Alias and functions
 alias tl='todo list'
 
@@ -114,6 +84,9 @@ autoload -U zmv
 autoload -U zrecompile
 autoload bashcompinit
 bashcompinit
+
+[ -d ~/.bash/_completion ] &&  for i in ~/.bash/_completion/*; do source $i; done
+
 
 export BASHMARKS_k=true
 export BASHMARKS_ITERM_SESSION="B ZSH"
@@ -238,5 +211,13 @@ hr(){printf '=%.0s' $(seq $COLUMNS)}
 
 function exportf (){
     export $(echo $1)="`whence -f $1 | sed -e "s/$1 //" `"
+}
+
+
+function gt(){
+osascript -e '#!/usr/bin/env osascript' \
+    -e 'tell application "TextMate"' \
+    -e 'set p to path of document 1'\
+    -e 'end tell'
 }
 

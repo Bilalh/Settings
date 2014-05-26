@@ -16,12 +16,9 @@ sourcetreemerge.executable=/Applications/SourceTree.app/Contents/Resources/opend
 sourcetreebulkmerge.premerge=False
 sourcetreebulkmerge.binary=True
 [alias]
-s = status
 c = commit
 
 [extensions]
 hgext.bookmarks =
-hggit =
 hgext.extdiff =
 hgext.purge=
-prompt = /Users/bilalh/Programming/prog/hg-prompt/prompt.py 

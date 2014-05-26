@@ -20,6 +20,8 @@
 	pom = push origin master
 	ldiff = difftool -t latex
 
+    rmdel = !git ls-files -dz | xargs -0 git rm
+
 	# Logs
 	lg = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
 	ld = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%ai)%Creset'
@@ -84,3 +86,5 @@
 	trustExitCode = true
 [credential]
 	helper = osxkeychain
+[push]
+	default = simple
