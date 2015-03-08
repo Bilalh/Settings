@@ -6,20 +6,23 @@ setopt interactivecomments
 plugins=(funcs todo)
 plugins+=(
          osx ruby autojump encode64 gem git-extras
-         pip battery brew pygmentize python vagrant
+         pip battery  pygmentize python vagrant
          #auto-fu
-         history-substring-search 
+         history-substring-search
          zsh-git-escape-magic
          anaconda forklift gnu-utils
+         percol
          )
 
-ANACONDA=~/.local/anaconda/
+ANACONDA=~/.local/miniconda3/
 
 DISABLE_CORRECTION=true
 ZSH_THEME="pure"
 source $ZSH/oh-my-zsh.sh
 
 fpath+=~/.oh-my-zsh/fpath
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
 autoload -Uz git-escape-magic
 git-escape-magic
 zstyle '*' single-ignored complete
@@ -28,10 +31,13 @@ unsetopt menu_complete
 export BASHMARKS_NO_PWD=True
 #export PROMPT='[%28<...<%4(~:...:)%3~/] %# '
 
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
+
 # History
 HISTFILE=${HISTFILE:-$HOME/.zsh_history}
-HISTSIZE=50000
-SAVEHIST=10000
+HISTSIZE=25500000
+SAVEHIST=25300000
 setopt APPEND_HISTORY           # append rather than overwrite history file.
 setopt EXTENDED_HISTORY         # save timestamp and runtime information
 setopt HIST_EXPIRE_DUPS_FIRST   # allow dups, but expire old ones when I hit HISTSIZE
@@ -45,13 +51,13 @@ setopt HIST_SAVE_NO_DUPS        # don't save duplicates
 setopt INC_APPEND_HISTORY       # write after each command
 setopt SHARE_HISTORY            # share history between sessions
 
-#setopt null_glob                # Allow null globs 
+#setopt null_glob                # Allow null globs
 setopt nonullglob
 setopt RM_STAR_WAIT             #  first wait ten seconds when doing rm *
 unsetopt cdablevars
 
-export EDITOR='vim'          # default editor 
-export LESS='-R'             # Less colour 
+export EDITOR='vim'          # default editor
+export LESS='-R'             # Less colour
 export FIGNORE=$FIGNORE:.o:.out:.pyc:.pdfsync:.log:.bbl:.aux:.blg:.out:.toc:
 
 
@@ -90,10 +96,12 @@ bashcompinit
 
 export BASHMARKS_k=true
 export BASHMARKS_ITERM_SESSION="B ZSH"
-[ -f  ~/Projects/_forks/bashmarks/bashmarks.sh ]  && source ~/Projects/_forks/bashmarks/bashmarks.sh 
+[ -f  ~/Projects/_forks/bashmarks/bashmarks.sh ]  && source ~/Projects/_forks/bashmarks/bashmarks.sh
 
 #Bindings
-insert_sudo () { zle beginning-of-line; zle -U "sudo " }
+function insert_sudo () {
+    zle beginning-of-line; zle -U "sudo "
+}
 zle -N insert-sudo insert_sudo
 bindkey '^[s' insert-sudo
 
@@ -129,7 +137,7 @@ tcsh-backward-delete-word () {
 zle -N tcsh-backward-delete-word
 bindkey "^W" tcsh-backward-delete-word
 
-# for trying # 
+# for trying #
 bindkey -s '^[3' \#
 bindkey -s '£' \#
 
@@ -144,20 +152,20 @@ bindkey '^Xa' increase-number
 bindkey -s '^Xx' '^[-^Xa'
 
 #recursive C-R  -- http://chneukirchen.org/blog/archive/2013/03/10-fresh-zsh-tricks-you-may-not-know.html
-autoload -Uz narrow-to-region
-function _history-incremental-preserving-pattern-search-backward
-{
-  local state
-  MARK=CURSOR  # magick, else multiple ^R don't work
-  narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
-  zle end-of-history
-  zle history-incremental-pattern-search-backward
-  narrow-to-region -R state
-}
-zle -N _history-incremental-preserving-pattern-search-backward
-bindkey "^R" _history-incremental-preserving-pattern-search-backward
-bindkey -M isearch "^R" history-incremental-pattern-search-backward
-bindkey "^S" history-incremental-pattern-search-forward
+#autoload -Uz narrow-to-region
+#function _history-incremental-preserving-pattern-search-backward
+#{
+  #local state
+  #MARK=CURSOR  # magick, else multiple ^R don't work
+  #narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
+  #zle end-of-history
+  #zle history-incremental-pattern-search-backward
+  #narrow-to-region -R state
+#}
+#zle -N _history-incremental-preserving-pattern-search-backward
+#bindkey "^R" _history-incremental-preserving-pattern-search-backward
+#bindkey -M isearch "^R" history-incremental-pattern-search-backward
+#bindkey "^S" history-incremental-pattern-search-forward
 
 # find zsh info
 function zman() {
@@ -190,7 +198,7 @@ function avgBitRate(){
     Types: 320+: %d 320: %d 256: %d 192: %d 160: %d 160-: %d \n",\
         NR, sum/NR/1000,max/1000, min/1000,\
         lossless, n320, n256, n192, n160, nless\
-    }' 
+    }'
 }
 
 #vim tags completion for vim -t <tag>
@@ -204,7 +212,7 @@ compctl -x 'C[-1,-t]' -K _get_tags -- vim
 autoload -U compinit && compinit -u
 
 if [ -f ~/CS/instancegen/scripts/misc/convenience.sh ]; then
-    source ~/CS/instancegen/scripts/misc/convenience.sh 
+    source ~/CS/instancegen/scripts/misc/convenience.sh
 fi
 
 hr(){printf '=%.0s' $(seq $COLUMNS)}
@@ -221,3 +229,16 @@ osascript -e '#!/usr/bin/env osascript' \
     -e 'end tell'
 }
 
+setopt HIST_IGNORE_SPACE
+
+if [ -n "$INSIDE_EMACS" ]; then
+  chpwd() { print -P "\033AnSiTc %d" }
+  print -P "\033AnSiTu %n"
+  print -P "\033AnSiTc %d"
+fi
+
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+
+[ -f /Users/bilalh/CS/gen/hs/scripts/_gen.sh ] && source /Users/bilalh/CS/gen/hs/scripts/_gen.sh

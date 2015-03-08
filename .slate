@@ -32,7 +32,6 @@ bind g:${hyper} grid padding:5 0:8,8 1:8,5
 
 # To Resize windows
 bind 1:${hyper} ${lefthalf}
-bind 1:${hyper} ${lefthalf}
 bind 2:${hyper} ${righthalf}
 
 bind 3:${hyper} ${topleft}
@@ -64,6 +63,7 @@ bind h:${hyper} focus left
 bind k:${hyper} focus up
 bind j:${hyper} focus down
 
+
 bind b:${hyper} focus behind
 
 # Other bindings
@@ -78,4 +78,3 @@ bind m:${hyper} throw right
 
 
 #bind i:${hyper} hint afqrplzvm
-

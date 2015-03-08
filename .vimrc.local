@@ -1,0 +1,265 @@
+let g:jedi#completions_enabled = 0
+
+set exrc                      " enable per-directory .vimrc files
+set secure                    " disable unsafe commands in local .vimrc files
+
+set listchars=tab:‣\ ,trail:¸ " Use Cedilla ¸  as the trailing whitespace char
+set shiftwidth=4
+set tabstop=4
+
+set guifont=Monaco:h13
+set backupcopy=yes " for hdevtools
+set cursorline
+set noshowmode " Don't show mode
+
+let g:no_haskell_conceal=1
+
+let g:session_autoload='no'
+let g:session_autosave='yes'
+
+let g:hdevtools_options=' -g -isrc -g -isrc/exec -g -Wall '
+
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_enable_smart_case=1
+
+let g:jedi#popup_select_first = 0
+
+" file settings
+autocmd BufRead,BufNewFile *.cpp,*.c,*.h,*.java,*.sh,*.bash,*.tex set noic cin noexpandtab
+autocmd BufRead,BufNewFile *.rb  set noexpandtab tabstop=2 shiftwidth=2
+au BufRead,BufNewFile *.go set filetype=go
+
+
+" let NERDTreeIgnore += ['\.tmproj$', '^tags$', '\.hi$', '\.o$']
+let g:ctrlp_custom_ignore={
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$|old$|savilerow$|dist$',
+  \ 'file': '\v\.(exe|so|dll|hi)$'
+  \ }
+
+
+" buffers to tabs
+noremap ,bt :bufdo tab split<CR>
+
+" jump to tag in new tab
+noremap ,ct <C-w><C-]><C-w>T
+
+" Show syntax highlighting for current scope
+map  <leader>zh :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" make p in Visual mode replace the selected text with the yank register
+vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>"
+
+"
+" haskell bindings
+noremap ,v :HdevtoolsType <CR>
+noremap ,V :HdevtoolsClear <CR>
+noremap ,y :HdevtoolsClear <CR>
+
+let g:hlint_args='--ignore=\"Unused\ LANGUAGE\ pragma\"'
+let g:syntastic_haskell_checkers=['hdevtools']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': [] }
+
+
+
+command Stree silent !stree
+command NI :%s/; \?int(.\{-})\(]\)\@=//g
+
+command G execute ":silent ! open_terminal.sh \"%:p:h\""
+command Gh execute ":silent ! echo 'ghci -isrc %' | pbcopy"
+command O execute ":silent ! open -R \"%:p\""
+command R execute ":silent ! reload_ghci.applescript"
+command A execute ":silent !  echo '%:p' | pbcopy"
+command D execute ":silent !  echo '%:p:h' | pbcopy"
+
+
+if has("gui_running")
+    " for wombat256 colorscheme too make essence numbers look better
+    " Blue
+    " highlight PreProc  term=underline ctermfg=5 guifg=DodgerBlue3
+    " orange
+    " highlight PreProc term=underline ctermfg=4 guifg=DarkOrange
+
+    nmap <D-[> :tabprevious<CR>
+    nmap <D-]> :tabnext<CR>
+    " not F11 and F12 Strangely
+    nmap <D-'> gT
+    nmap <D-Bslash> gt
+
+    nnoremap ¡ 1gt
+    nnoremap € 2gt
+    " nnoremap # 3gt
+    nnoremap ¢ 4gt
+    nnoremap ∞ 5gt
+    nnoremap § 6gt
+    nnoremap ¶ 7gt
+    nnoremap • 8gt
+    nnoremap ª 9gt
+
+else
+    inoremap 3 #
+    inoremap £ #
+
+    noremap b b
+    noremap f e
+
+    set mouse=a
+
+    " not F11 and F12 Strangely
+    nmap 0;133  gT
+    nmap 0;134  gt
+
+    nnoremap <Esc>1 1gt
+    nnoremap <Esc>2 2gt
+    " nnoremap <Esc>3 3gt
+    nnoremap <Esc>4 4gt
+    nnoremap <Esc>5 5gt
+    nnoremap <Esc>6 6gt
+    nnoremap <Esc>7 7gt
+    nnoremap <Esc>8 8gt
+    nnoremap <Esc>9 9gt
+
+endif
+
+function! Haskell_gf_import()
+" Get the import declaration under the cursor
+let l:module_name = matchstr(getline("."), '^import\s\+\(qualified\s\+\)\=\zs\(\w\|\.\)\+\ze')
+if l:module_name ==# ''
+  echo "Not Found"
+  return
+endif
+
+let l:module_path = substitute(l:module_name,"\\.", "/", "g") . ".hs"
+
+exe "find " .  l:module_path
+endfunction
+
+function! Haskell_gf_import_tab()
+    execute ":tab split"
+    call Haskell_gf_import()
+endfunction
+
+augroup HaskellGF
+        au!
+        au FileType haskell  nnoremap <buffer> <silent> gf :call Haskell_gf_import()<CR>
+        au FileType haskell  nnoremap <buffer> <silent> <C-W>gf :call Haskell_gf_import_tab()<CR>
+augroup END
+
+augroup sourcinglocal
+  autocmd!
+  autocmd bufwritepost .vimrc.local source .vimrc.local
+augroup END
+
+"sane sys paste
+set pastetoggle=<F2>
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+""
+
+" yank to sys board
+vmap ,p "*y<CR>
+
+if exists(':Tabularize')
+  AddTabularPattern! colon                  /^[^:]*\zs:/
+  AddTabularPattern! haskell_bindings       /^[^=]*\zs=\ze[^[:punct:]]/
+  AddTabularPattern! haskell_comments       /--.*/l2
+  AddTabularPattern! haskell_do_arrows      / \(<-\|←\) /l0r0
+  AddTabularPattern! haskell_imports        /^[^(]*\zs(.*\|\<as\>.*/
+  AddTabularPattern! haskell_pattern_arrows / \(->\|→\) /l0r0
+  AddTabularPattern! haskell_types          / \(::\|∷\) /l0r0
+endif
+
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git', 'cd %s && git ls-files --cached --exclude-standard --others'],
+    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+    \ },
+  \ 'fallback': 'find %s -type f',
+  \ }
+
+" Ignore some folders and files for CtrlP indexing
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|public$|log\|tmp$|smac*',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ }
+
+" fix macvim moving left on opening nerdtree
+set guioptions-=L
+let g:nerdtree_tabs_open_on_gui_startup=1
+let g:NERDTreeWinSize=20
+noremap ,m :NERDTreeTabsToggle<CR>
+
+
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+
+
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+
+let g:ackpreview = 1
+
+function DeleteHiddenBuffers()
+    let tpbl=[]
+    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+        silent execute 'bwipeout' buf
+    endfor
+endfunction
+
+aug QFClose
+  au!
+  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+aug END
+
+" set colorcolumn=94
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+
+autocmd Syntax c,cpp,vim,xml,html,xhtml,perl,python,haskell normal zR
+
+:autocmd BufReadPost * let PreFoldPosition = getpos('.') | silent! %foldopen! | call setpos('.', PreFoldPosition)
+
+
