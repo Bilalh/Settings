@@ -3,4 +3,5 @@
 
 [ -d ~/.pbash/ ] &&  for i in ~/.pbash/*.sh; do source $i; done
 
-
+source ~/.settings/paths.sh
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

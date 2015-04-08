@@ -11,21 +11,11 @@
 	excludesfile = /Users/bilalh/.gitignore
 
 [alias]
-    b = branch
-    c = commit
-    d = describe
-    p = push
     st = status
-    ca = commit -am
     cam = commit --amend -am
     ch = checkout
     pom = push origin master
     ldiff = difftool -t latex
-
-    rmdel = !git ls-files -dz | xargs -0 git rm
-
-  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-  snapshots = !git stash list --grep snapshot
 
     # Logs
     lg = log --graph --pretty=format:'%Cred%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
@@ -53,16 +43,12 @@
     # show remote branches as well
     brageall = !git brage refs/remotes
 
-    # show a list of tags sorted by when they were tagged
-    tagage = "!sh -c 'git for-each-ref --sort=taggerdate refs/tags --format=\"%(refname:short)\"'"
-
     # show a list of every branch and show there latests commit, sorted by last commit
     brlog = "!sh -c 'for C in $(git for-each-ref --sort=committerdate refs/heads --format=\"%(refname:short)\") ; do git show -s --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset $C\" \"$C\" -- ; git show -s $C ; echo; done'"
     # url of origin, about 99% of what I use git config --list for
     cloneurl = config --get remote.origin.url
 
-    shorten = "!sh -c 'curl -i http://git.io -F url=$1' -"
-	create-gitignore = "!gi() { curl http://www.gitignore.io/api/$@ ;}; gi"
+    icdiff = !git-icdiff
 
 [core]
     pager = less -FRSX
@@ -76,11 +62,11 @@
     private = yes
     browse  = yes
 
-[diff]
-    tool   = icdiff
+# [diff]
+#     tool   = icdiff
 
-[difftool]
-    prompt = no
+# [difftool]
+#     prompt = no
 
 [difftool.latex]
     cmd = latexdiff  \"$LOCAL\" \"$REMOTE\"

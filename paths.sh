@@ -41,7 +41,8 @@ export R_HOME=/Library/Frameworks/R.framework/Resources
 export GOPATH="/Users/bilalh/Programming/go"
 
 export BYOBU_PREFIX=$(brew --prefix)
-export DEVELOPMENT_MODE=yes
+# export DEVELOPMENT_MODE=yes
 
 
 export SAVED_BINARIES="/Users/bilalh/Desktop/Results/binaries"
+export HOST_TYPE="bh_laptop"

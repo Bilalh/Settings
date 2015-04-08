@@ -174,7 +174,7 @@ function! XTermPasteBegin()
 endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-""
+
 
 " yank to sys board
 vmap ,p "*y<CR>
