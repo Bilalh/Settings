@@ -242,4 +242,5 @@ autoload -U +X bashcompinit && bashcompinit
 
 
 [ -f /Users/bilalh/CS/gen/hs/scripts/_gen.sh ] && source /Users/bilalh/CS/gen/hs/scripts/_gen.sh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+unset GREP_OPTIONS

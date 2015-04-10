@@ -1,32 +1,42 @@
 call plug#begin('~/.nvim/plugged')
 
 " Make sure you use single quotes
+
 Plug 'benekastah/neomake'
+
 Plug 'vim-scripts/wombat256.vim'
+Plug 'bling/vim-airline'
 
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
-Plug 'kien/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'Shougo/neocomplcache'
+
+Plug 'Shougo/unite.vim'
+Plug 'mileszs/ack.vim'
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
-Plug 'mileszs/ack.vim'
-Plug 'bling/vim-airline'
+Plug 'tpope/vim-commentary'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+
+Plug '~/.vim/bundle/essence'
+
 
 call plug#end()
 
-" Syntax checking 
+" Syntax checking
 autocmd! BufWritePost * Neomake
-
 " Color scheme
 colorscheme wombat256mod
 
-" Allow mouse use 
+" Allow mouse use
 set mouse=a
 
 " Don't show mode changes
@@ -93,7 +103,7 @@ set wildmode=list:longest,full
 set laststatus=2
 
 " Use Cedilla ¸  as the trailing whitespace char
-set listchars=tab:‣\ ,trail:¸ 
+set listchars=tab:‣\ ,trail:¸
 set list
 
 " Pressing ,ss will toggle and untoggle spell checking
@@ -112,9 +122,35 @@ noremap <c-k> <c-w>k
 noremap <c-j> <c-w>j
 noremap <c-l> <c-w>l
 
-noremap °;133 :tabprevious<cr>
-noremap °;134 :tabnext<cr>
+" CMD-'  CMD-\
+noremap °;133 :bprev<cr>
+noremap °;134 :bnext<cr>
 
+" buffers list
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#tabline#close_symbol = 'X'
+
+
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+
+" allow unsaved
+set hidden
+
+" Vim jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
 
 " Disable highlight when <leader><cr> is pressed
 " but preserve cursor coloring
@@ -133,24 +169,23 @@ set pastetoggle=<F2>
 autocmd BufRead,BufNewFile *.py  set tabstop=4 shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.rb  set noexpandtab tabstop=2 shiftwidth=2
 
+" Delete trailing white space on save
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+
+augroup whitespace
+  autocmd!
+  autocmd BufWrite * :call DeleteTrailingWS()
+augroup END
+
+
+
 " Fuzzy find files
-nnoremap <silent> <Leader><space> :CtrlP<CR>
-let g:ctrlp_max_files=0
-
-let g:ctrlp_user_command = {
-  \ 'types': {
-    \ 1: ['.git', 'cd %s && git ls-files --cached --exclude-standard --others'],
-    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-    \ },
-  \ 'fallback': 'find %s -type f',
-  \ }
-
-" Ignore some folders and files for CtrlP indexing
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|public$|log\|tmp$|smac*',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-  \ }
-
+" nnoremap <silent> <Leader><space> :Unite file_rec/neovim<CR>
+nnoremap <silent> <Leader><space> :FZF<CR>
 
 if !exists('g:airline_symbols')
 let g:airline_symbols = {}
