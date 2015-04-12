@@ -1,3 +1,4 @@
+" Plugins {{{
 call plug#begin('~/.nvim/plugged')
 
 " Make sure you use single quotes
@@ -15,7 +16,6 @@ Plug 'ervandew/supertab'
 Plug 'Shougo/neocomplcache'
 
 Plug 'Shougo/unite.vim'
-Plug 'mileszs/ack.vim'
 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
@@ -23,22 +23,29 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 
+" Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
+Plug 'moll/vim-bbye'
+Plug 'rking/ag.vim'
 
+" dash api
+Plug 'rizzatti/dash.vim'
+" Essence syntax
 Plug '~/.vim/bundle/essence'
 
+Plug 'nathanaelkane/vim-indent-guides'
 
 call plug#end()
+" }}}
 
 " Syntax checking
 autocmd! BufWritePost * Neomake
 " Color scheme
 colorscheme wombat256mod
 
-" Allow mouse use
+" Allow mouse use"
 set mouse=a
-
 " Don't show mode changes
 set noshowmode
 
@@ -65,6 +72,8 @@ set number
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
+" Searching {{{
+
 " Ignore case when searching
 set ignorecase
 
@@ -83,6 +92,10 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>"
 " yank to sys board
 vmap ,p "*y<CR>
 
+" }}}
+
+" Spacing {{{
+
 " Use spaces instead of tabs
 "set expandtab
 
@@ -94,10 +107,19 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 
+" }}}
+
+" Auto completion {{{
+
 " Turn on the WiLd menu
 set wildmenu
 " Tab-complete files up to longest unambiguous prefix
 set wildmode=list:longest,full
+
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_enable_smart_case=1
+
+" }}}
 
 " Always show the status line
 set laststatus=2
@@ -109,22 +131,32 @@ set list
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 
-let g:neocomplcache_enable_at_startup=1
-let g:neocomplcache_enable_smart_case=1
 
 " Treat long lines as break lines (useful when moving around in them)
 nnoremap j gj
 nnoremap k gk
 
-" jump to splits
+" jump to splits {{{
 noremap <c-h> <c-w>h
 noremap <c-k> <c-w>k
 noremap <c-j> <c-w>j
 noremap <c-l> <c-w>l
+" }}}
+
+" Buffers {{{
+
+" allow unsaved
+set hidden
+
+" delete buffer
+nnoremap <Leader>q :Bdelete<CR>
+nnoremap <Leader>Q :bufdo :Bdelete<CR>
 
 " CMD-'  CMD-\
 noremap °;133 :bprev<cr>
 noremap °;134 :bnext<cr>
+tnoremap °;133 <C-\><C-n> :bprev<cr>
+tnoremap °;134 <C-\><C-n> :bnext<cr>
 
 " buffers list
 let g:airline#extensions#tabline#enabled=1
@@ -143,14 +175,21 @@ nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 
-" allow unsaved
-set hidden
+" }}}
 
-" Vim jump to the last position when reopening a file
+" Folding {{{
+set foldmethod=marker
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+" }}}
+
+" Vim jump to the last position when reopening a file {{{
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
+" }}}
 
 " Disable highlight when <leader><cr> is pressed
 " but preserve cursor coloring
@@ -169,6 +208,8 @@ set pastetoggle=<F2>
 autocmd BufRead,BufNewFile *.py  set tabstop=4 shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.rb  set noexpandtab tabstop=2 shiftwidth=2
 
+" Whitespace {{{
+
 " Delete trailing white space on save
 func! DeleteTrailingWS()
   exe "normal mz"
@@ -180,18 +221,32 @@ augroup whitespace
   autocmd!
   autocmd BufWrite * :call DeleteTrailingWS()
 augroup END
+" }}}
 
+" undo {{{
+set undofile                " Save undo's after file closes
+set undodir=$HOME/.nvim/undo " where to save undo histories
+set undolevels=1000         " How many undos
+set undoreload=10000        " number of lines to save for undo
+
+" }}}
+
+" dash search
+nmap <silent> <leader>d <Plug>DashSearch
 
 
 " Fuzzy find files
 " nnoremap <silent> <Leader><space> :Unite file_rec/neovim<CR>
 nnoremap <silent> <Leader><space> :FZF<CR>
 
+" Airline {{{
+
 if !exists('g:airline_symbols')
 let g:airline_symbols = {}
 endif
 
-
+" Auto readload on external changes
+set autoread
 
 " unicode symbols
 let g:airline_left_sep = '»'
@@ -215,3 +270,6 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
+
+" }}}
+
