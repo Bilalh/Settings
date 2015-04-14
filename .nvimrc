@@ -1,4 +1,7 @@
 
+" Plugins {{{
+" Make sure you use single quotes
+
 " Install vim-plug if it does not exist
 if empty(glob('~/.nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.nvim/autoload/plug.vim --create-dirs
@@ -6,10 +9,8 @@ if empty(glob('~/.nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
-" Plugins {{{
-call plug#begin('~/.nvim/plugged')
 
-" Make sure you use single quotes
+call plug#begin('~/.nvim/plugged')
 
 Plug 'benekastah/neomake'
 
@@ -49,23 +50,25 @@ Plug 'elzr/vim-json'
 call plug#end()
 " }}}
 
-" Syntax checking
-autocmd! BufWritePost * Neomake
-" Color scheme
-silent! colorscheme wombat256mod
+" With a map leader it's possible to do extra key combinations
+let mapleader = ","
+let g:mapleader = ","
+
+" Leader key timeout
+set tm=2000
 
 " Allow mouse use"
 set mouse=a
 " Don't show mode changes
 set noshowmode
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
+" Syntax checking
+autocmd! BufWritePost * Neomake
+" Color scheme
+silent! colorscheme wombat256mod
 
-" Leader key timeout
-set tm=2000
+
+
 " Allow the normal use of "," by pressing it twice
 noremap ,, ,
 
@@ -81,6 +84,35 @@ set number
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
+
+" Always show the status line
+set laststatus=2
+
+" Use Cedilla ¸  as the trailing whitespace char
+set listchars=tab:‣\ ,trail:¸
+set list
+
+" Line wraping
+set showbreak=↪
+
+let g:indentLine_enabled =0
+
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Treat long lines as break lines (useful when moving around in them)
+nnoremap j gj
+nnoremap k gk
+
+" Remember info about open buffers on close
+set viminfo^=%
+
+" jump to tag in new tab
+noremap ,ct <C-w><C-]><C-w>T
+
+"sane sys paste
+set pastetoggle=<F2>
+
 
 " Searching {{{
 
@@ -108,6 +140,19 @@ nmap <silent> <leader><cr> :noh\|hi Cursor guibg=red<cr>
 
 " }}}
 
+" File Search {{{
+
+" dash search
+nmap <silent> <leader>d <Plug>DashSearch
+
+
+" Fuzzy find files
+" nnoremap <silent> <Leader><space> :Unite file_rec/neovim<CR>
+nnoremap <silent> <Leader><space> :FZF<CR>
+
+nnoremap <Leader>w :IndentLinesToggle<CR>
+"}}}
+
 " Spacing {{{
 
 " Use spaces instead of tabs
@@ -120,6 +165,9 @@ set smarttab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
+
+autocmd BufRead,BufNewFile *.py  set tabstop=4 shiftwidth=4 softtabstop=4
+autocmd BufRead,BufNewFile *.rb  set noexpandtab tabstop=2 shiftwidth=2
 
 " }}}
 
@@ -135,28 +183,7 @@ let g:neocomplcache_enable_smart_case=1
 
 " }}}
 
-" Always show the status line
-set laststatus=2
-
-" Use Cedilla ¸  as the trailing whitespace char
-set listchars=tab:‣\ ,trail:¸
-set list
-
-" Line wraping
-set showbreak=↪
-
-let g:indentLine_enabled =0
-
-
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-
-" Treat long lines as break lines (useful when moving around in them)
-nnoremap j gj
-nnoremap k gk
-
-" jump to splits {{{
+" Jump to splits {{{
 noremap <c-h> <c-w>h
 noremap <c-k> <c-w>k
 noremap <c-j> <c-w>j
@@ -211,20 +238,6 @@ if has("autocmd")
 endif
 " }}}
 
-
-" Remember info about open buffers on close
-set viminfo^=%
-
-" jump to tag in new tab
-noremap ,ct <C-w><C-]><C-w>T
-
-"sane sys paste
-set pastetoggle=<F2>
-
-
-autocmd BufRead,BufNewFile *.py  set tabstop=4 shiftwidth=4 softtabstop=4
-autocmd BufRead,BufNewFile *.rb  set noexpandtab tabstop=2 shiftwidth=2
-
 " Whitespace {{{
 
 " Delete trailing white space on save
@@ -240,23 +253,13 @@ augroup whitespace
 augroup END
 " }}}
 
-" undo {{{
+" Undo {{{
 set undofile                " Save undo's after file closes
 set undodir=$HOME/.nvim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 
 " }}}
-
-" dash search
-nmap <silent> <leader>d <Plug>DashSearch
-
-
-" Fuzzy find files
-" nnoremap <silent> <Leader><space> :Unite file_rec/neovim<CR>
-nnoremap <silent> <Leader><space> :FZF<CR>
-
-nnoremap <Leader>w :IndentLinesToggle<CR>
 
 " Airline {{{
 
