@@ -1,3 +1,11 @@
+
+" Install vim-plug if it does not exist
+if empty(glob('~/.nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+
 " Plugins {{{
 call plug#begin('~/.nvim/plugged')
 
@@ -33,8 +41,10 @@ Plug 'rking/ag.vim'
 Plug 'rizzatti/dash.vim'
 " Essence syntax
 Plug '~/.vim/bundle/essence'
-
-Plug 'nathanaelkane/vim-indent-guides'
+" Indent guides
+Plug 'Yggdroot/indentLine'
+" json
+Plug 'elzr/vim-json'
 
 call plug#end()
 " }}}
@@ -92,6 +102,10 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>"
 " yank to sys board
 vmap ,p "*y<CR>
 
+" Disable highlight when <leader><cr> is pressed
+" but preserve cursor coloring
+nmap <silent> <leader><cr> :noh\|hi Cursor guibg=red<cr>
+
 " }}}
 
 " Spacing {{{
@@ -127,6 +141,12 @@ set laststatus=2
 " Use Cedilla ¸  as the trailing whitespace char
 set listchars=tab:‣\ ,trail:¸
 set list
+
+" Line wraping
+set showbreak=↪
+
+let g:indentLine_enabled =0
+
 
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
@@ -191,9 +211,6 @@ if has("autocmd")
 endif
 " }}}
 
-" Disable highlight when <leader><cr> is pressed
-" but preserve cursor coloring
-nmap <silent> <leader><cr> :noh\|hi Cursor guibg=red<cr>
 
 " Remember info about open buffers on close
 set viminfo^=%
@@ -238,6 +255,8 @@ nmap <silent> <leader>d <Plug>DashSearch
 " Fuzzy find files
 " nnoremap <silent> <Leader><space> :Unite file_rec/neovim<CR>
 nnoremap <silent> <Leader><space> :FZF<CR>
+
+nnoremap <Leader>w :IndentLinesToggle<CR>
 
 " Airline {{{
 
