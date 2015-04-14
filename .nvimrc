@@ -52,7 +52,7 @@ call plug#end()
 " Syntax checking
 autocmd! BufWritePost * Neomake
 " Color scheme
-colorscheme wombat256mod
+silent! colorscheme wombat256mod
 
 " Allow mouse use"
 set mouse=a
