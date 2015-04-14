@@ -113,6 +113,8 @@ noremap ,ct <C-w><C-]><C-w>T
 "sane sys paste
 set pastetoggle=<F2>
 
+" Auto readload on external changes
+set autoread
 
 " Searching {{{
 
@@ -267,8 +269,7 @@ if !exists('g:airline_symbols')
 let g:airline_symbols = {}
 endif
 
-" Auto readload on external changes
-set autoread
+
 
 " unicode symbols
 let g:airline_left_sep = '»'
