@@ -204,6 +204,11 @@ nnoremap <Leader>Q :bufdo :Bdelete<CR>
 " CMD-'  CMD-\
 noremap °;133 :bprev<cr>
 noremap °;134 :bnext<cr>
+
+imap °;133 <esc>:bprev<cr>
+imap °;134 <esc>:bnext<cr>
+
+
 tnoremap °;133 <C-\><C-n> :bprev<cr>
 tnoremap °;134 <C-\><C-n> :bnext<cr>
 
